@@ -28,9 +28,9 @@ In the real world, front-end web never knows every services' address, and docker
     * check KV on consul. like the picture(#kvpage).
 
 ### servicepage
-![Consul Service Page](https://github.com/PrinsWu/consul_microweb/data/Consul_services.jpg)
+![Consul Service Page](https://github.com/PrinsWu/consul_microweb/blob/master/data/Consul_services.jpg)
 
 ### kvpage
-![Consul KV Page](https://github.com/PrinsWu/consul_microweb/data/Consul_kv.jpg)
+![Consul KV Page](https://github.com/PrinsWu/consul_microweb/blob/master/data/Consul_kv.jpg)
 
 
