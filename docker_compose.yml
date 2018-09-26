@@ -60,3 +60,5 @@ services:
     environment:
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
+      - MICROUSER_SERVICE_NAME=consul_microweb_microuser
+      - MICROTALK_SERVICE_NAME=consul_microweb_microtalk
