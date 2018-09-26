@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  consul:
+    image: consul:latest
+    command: consul agent -server -dev -client=0.0.0.0 -ui -bootstrap -log-level warn
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:53/udp"
+
+  registrator:
+    depends_on:
+      - consul
+    image: gliderlabs/registrator:latest
+    command: -internal consul://consul:8500
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    links:
+      - consul
+
+  microuser: &microuser
+    depends_on:
+      - registrator
+    build: ./microuser
+    # ports:
+    #   - "8090:80"
+    volumes:
+      - ./microuser:/app
+
+  # microuser2:
+  #   <<: *microuser
+    # ports:
+    #   - "8091:80"
+  
+  microtalk: &microtalk
+    depends_on:
+      - registrator
+    build: ./microtalk
+    # ports:
+    #   - "8095:80"
+    volumes:
+      - ./microtalk:/app
+
+  # microtalk2:
+  #   <<: *microtalk
+    # ports:
+    #   - "8096:80"
+
+  microweb:
+    depends_on:
+      - registrator
+    build: ./microweb
+    ports:
+      - "8080:80"
+    volumes:
+      - ./microweb:/app
+    links:
+      - consul
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
